@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체</title>
+    <script>   
+    // #### 객체{}
+    // 객체는 키와 값으로 구성 => 키:값
+    const person = {
+        firstName:'Cindy',
+        lastName:'Shin',
+        age:31,
+    };
+    console.log(person);
+
+    // + 접근
+    // 객체.키명
+    // 객체["키명"]
+    console.log(person.firstName);
+    console.log(person['lastName']);
+
+    // + 추가
+    // 키, 값을 추가
+    // 객체명.추가키명='값'
+    person.gender='female';
+    person['gender']='female';
+    console.log(person);
+
+    // + 제거
+    // delete 객체명.키명
+    delete person.age;
+    console.log(person);
+
+    // + 단축 프로퍼티 작성법
+    const name='CindyShin'    
+    const persona = {
+        name: name,
+        firstName: 'Cindy',
+        lastName: 'Shin',
+        age: 31,
+    };
+    console.log(persona);
+
+    // function makeObject(age){
+    //     return {
+    //         name: 'Tom',
+    //         age: age,
+    //         hobby: 'football',
+    //     }
+    // }
+    // 위와 동일
+    function makeObject(age){
+        return {
+            name: 'Tom',
+            age,
+            hobby: 'football',
+        }
+    }
+    let age_30 = makeObject(30);
+    console.log(age_30);
+
+    // + 오브젝트의 프로퍼티 존재 여부 확인
+    // 키명 in 객체명
+    // => 선택한 객체에 키가 있는지를 확인
+    const personb = {
+        name: name,
+        firstName: 'Cindy',
+        lastName: 'Shin',
+        age: 31,
+    };
+    // age가 있는지 확인
+    // console.log(personb.hobby); 없는것 확인하면 undefined
+    console.log('age' in personb);
+    // => 어떤 값이 넘어올지 확신하지않을때
+
+    // + 문제: 나이가 들어있지 않거나 나이가 20세 이하이면 false, 나이값이 있고 20세 이상이면 true가 출력되게 만들기
+    // 객체 정의 후 사용, 판단할 수 있는 함수로 객체를 매개변수 받아 확인하기
+    const personC = [
+        {name: 'a', age: 5},
+        {name: 'b' },
+        {name: 'c', age: 20},
+        {name: 'd', age: 24},
+    ]
+    // 배열내 객체는 매개변수로 읽어올수 없나? 
+    // 함수안에 넣는 매개변수로는 객체를 읽어올 필요가 없음! 매개변수로 넣는 이름은 내가 마음대로 정하는것.
+    // 마지막에 콘솔로 읽어올때 매개변수에 배열내 객체를 불러오면 되니까
+    const checkAge = (person) => {
+      if(person.age>=20 && person.age) {
+        return true;
+      } 
+      return false; 
+    };
+    console.log(`이거->`, checkAge(personC[3]));
+
+    // a&&b 둘다 참일때 참, a||b 둘다 거짓일때 거짓
+    // 1. 성인인지 아닌지를 판단하는 함수
+    function isA(user){
+        //성인 판단
+        if(("age" in user) && user.age>=20 ){
+            return true;
+        }
+        return false;
+    }
+    // user = a1객체, a2객체 할당
+    // 함수호출시 (객체명);
+
+    const Aom = {
+        name:'Aom',
+        age:30
+    }
+    const Bom = {
+        name:'Bom',
+        age:2
+    }
+    const Com = {
+        name:'Com',
+        // age:21
+    }
+    console.log(isA(Com));
+
+    const superman={
+        name:'superman',
+        age:33,
+        fly:function(){
+            console.log('날아갑니다.');
+        }
+    }
+    // => function 생략가능 => fly:(){}의 형태
+
+    // superman.fly();
+    // =>객체에 함수 형식 삽입후 호출
+    // =>메서드:객체 프로퍼티에 할당된 함수
+
+    // 객체와 메서드의 관계
+    const userA={
+        name:'Tom',
+        sayHello:function(){
+            console.log(`Hello, I'm ${이름}`);
+        }
+    }
+    // => 객체안 함수(메서드) 객체 안에 있는 키를 활용할때
+    // => 객체 접근 객체명.키명
+    const userB={
+        name:'Tom',
+        // sayHello:function(){
+        //     console.log(`Hello, I'm ${userB.name}`);
+        // }
+        // => 내 객체 안에를 해당 객체명 대신 영역한정을 위해 
+        // => this
+        sayHello:function(){
+            console.log(`Hello, I'm ${this.name}`);
+        }
+    }
+    console.log(userB.sayHello());
+
+    // 화살표 함수 안에서는 this 개념 사용 안함
+    // => 화살표 함수 안에서 this를 사용한다면 외부에서 값을 가져옴
+    let boy = {
+        name: 'Tom',
+        sayHello:() => {
+            console.log(this);
+            // => 화살표 함수 안에서 this는 전역 객체를 찾음
+            // => 브라우저 환경일때 window
+            // => node.js 에서는 global
+        }
+    }
+    boy.sayHello();
+
+    // this를 사용하지 않을때 문제 발생확인
+    let userC={
+        name:'Tom',
+        sayHello:function(){
+            console.log(`Hello, I'm ${userC.name}`);
+        }
+    }
+    let man = userC;
+    // => man.name, userC.name
+
+    console.log(man.name);
+    console.log(userC.name);
+
+    userC=null;
+    // =>userC로 객체 접근 차단
+
+    // sayHello함수에서 userC를 this로 바꾸면 정상동작됨!!
+    // =>접근명이 달라져도 오류없이 객체에 접근
+    man.sayHello();
+
+    </script>
+</head>
+<body>
+</body>
+</html>

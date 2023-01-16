@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 1. mask 영역 가로값, 세로값, 넘치는 영역 자르기
+        2. box_wrap는 실제 버튼을 클릭시 움직이는 영역
+        3. 이미지 박스 영역
+        4. 버튼영역 */
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul, li {
+            list-style: none;
+        }
+        .mask{
+            width: 70vw;
+            height: 60vh;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .boxWrap{
+            width: 350vw;
+            height: 60vh;
+            position: absolute;
+        }
+        .box{
+            width: 70vw;
+            height: 60vh;
+            float: left;
+            text-align: center;
+            line-height: 60vh;
+
+        }
+        /* .box:nth-child(1){
+            background-color: aliceblue;
+        }
+        .box:nth-child(2){
+            background-color: rgb(218, 238, 255);
+        }
+        .box:nth-child(3){
+            background-color: rgb(160, 210, 255);
+        }
+        .box:nth-child(4){
+            background-color: rgb(106, 186, 255);
+        }
+        .box:nth-child(5){
+            background-color: rgb(42, 155, 255);
+        } */
+        .buttonWrap{
+            width: 320px;
+            height: 40px;
+            /* background-color: brown; */
+            position: absolute;
+            left: 50%;
+            margin-left: -160px;
+            bottom: 20px;
+            text-align: center;
+        }
+        .button{
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            float: left;
+            margin-left: 20px;
+            /* 정사각형일떄 가로세로 크기값에 1/2값 정원 만들기 */
+            border-radius: 20px;
+            text-align: center;
+            line-height: 40px;
+        }
+        .on{
+            background-color: beige;
+            color: brown;
+        }
+    </style>
+    <script src="jquery-3.6.3.js" ></script>
+    <script src="jquery-ui.js" ></script>
+    <script>
+        // 1. 각 버튼의 인덱스값을 사용
+        // 버튼을 클릭시 자신의 인덱스값으로 움직임
+        // 인덱스가 3이면 3*이미지의 가로값 애니메이션이 지정됨
+        
+        // 2. 클릭이 되는 영역의 활성화
+        // 해당 인덱스일때 활성화 스타일 추가
+        $(document).ready(function(){
+            let bg = ['aliceblue', 'rgb(218, 238, 255)','rgb(160, 210, 255)','rgb(106, 186, 255)','rgb(42, 155, 255)']
+            let vw=$(window).width();
+            let allClick = 0;
+
+            $(".box").css({
+                background:function(index){
+                    return bg[index]
+                }
+            })
+
+            $(".button").click(function(){
+                allClick=$(this).index();
+                // console.log(allClick);
+                $(".boxWrap").animate({
+                    left : -vw*0.7*allClick
+                },500)
+
+                // $(this).addClass("on");
+                $(".button").removeClass("on");
+                $(".button").eq(allClick).addClass("on");
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <!-- 1. 마스크영역
+    2. 움직이는 영역(boxWrap)
+    3. boxWrap > 5개의 박스(이미지)
+    4. 5개의 버튼 위치  -->
+    <div class="mask">
+        <div class="boxWrap">
+            <div class="box">
+                1
+            </div>
+            <div class="box">
+                2
+            </div>
+            <div class="box">
+                3
+            </div>
+            <div class="box">
+                4
+            </div>
+            <div class="box">
+                5
+            </div>
+        </div>
+        <ul class="buttonWrap">
+            <li class="button">1</li>
+            <li class="button">2</li>
+            <li class="button">3</li>
+            <li class="button">4</li>
+            <li class="button">5</li>
+        </ul>
+
+
+    </div>
+</body>
+</html>

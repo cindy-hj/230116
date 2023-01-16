@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생성자 함수</title>
+    <script>
+        // #### 생성자 함수
+        // + 회원가입, 상품의 목록
+        // => 작업을 하다보면 객체를 반복적으로 작업해야 할 경우
+        // => 생성자 함수를 사용 동일 형태의 객체를 만들 수 있음
+        // => 일반함수와 사용시 구분하기 위해서 
+        // => 생성자 함수의 함수명은 첫글자를 대문자로 작성함
+        // => new연산자를 사용해서 호출
+
+        let user = {
+            name: 'Tom',
+            age: 30,
+        }
+        // 위 형태의 객체를 여러개 작성하는 생성자 함수
+        function User(name, age) {
+            // this{} 구동되는 형식일뿐 작성내용 아님
+            this.name=name;
+            this.age=age;
+            // return this 구동되는 형식일뿐 작성내용 아님
+        }
+        let user1 = new User('Mike', 20);
+        let user2 = new User('Jane', 30);
+        let user3 = new User('Sam', 40);
+        console.log(user1);
+        console.log(user2);
+        console.log(user3);
+        // console.log(User('Mike',20));
+        // => 생성자 함수는 new연산자로 호출해야 함
+        // => 일반함수로 호출 안됨
+
+        // + 상품과 상품의 가격 디비를 작성
+        // 1. 상품 인형 가격 1000
+        // 2. 상품 가방 가격 3000
+        // 3. 상품 지갑 가격 4000
+        // 4. 상품 신발 가격 5000        
+        // 객체를 만들기
+        function Product(name, price) {
+            this.name = name;
+            this.price = price;
+            // + 추가
+            // product3.showPrice();
+            // 호출하면 가격은 4000원 입니다. 라고 출력
+            this.showPrice = function()  {
+                document.write(`가격은 ${this.price}원 입니다,`);
+            }
+        }
+        let product1 = new Product('인형', 1000);
+        let product2 = new Product('가방', 3000);
+        let product3 = new Product('지갑', 4000);
+        let product4 = new Product('신발', 5000);
+        console.log(product3);
+
+        product2.showPrice();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
